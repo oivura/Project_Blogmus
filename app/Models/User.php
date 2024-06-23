@@ -43,3 +43,37 @@ class User extends Authenticatable
     ];
 }
 
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+
+class User extends Model
+{
+    use HasFactory, HasUuids;
+
+    protected $keyType = 'uuid';
+    public $incrementing = false;
+
+    protected $fillable = [
+        'username',
+        'email',
+        'password',
+    ];
+
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+}
